@@ -74,6 +74,23 @@
 	 * @param {function} callback The callback to fire after saving
 	 * @param {number} id An optional param to enter an ID of an item to update
 	 */
+
+	function findById(todos, id) {
+		for (var i = 0; i < todos.length; i++) {
+			if (todos[i].id === id) {
+				return todos[i]
+			}
+		}
+	}
+
+	function updateItem(item, updateData) {
+		if (item) {
+			for (var key in updateData) {
+				item[key] = updateData[key];
+			}
+		}
+	}
+
 	Store.prototype.save = function (updateData, callback, id) {
 		var data = JSON.parse(localStorage[this._dbName]);
 		var todos = data.todos;
@@ -86,14 +103,8 @@
 
 		// If an ID was actually given, find the item and update each property
 		if (id) {
-			for (var i = 0; i < todos.length; i++) {
-				if (todos[i].id === id) {
-					for (var key in updateData) {
-						todos[i][key] = updateData[key];
-					}
-					break;
-				}
-			}
+			var item = findById(todos, id)
+			updateItem(item, updateData)
 
 		} else {
 
