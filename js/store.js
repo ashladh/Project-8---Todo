@@ -156,8 +156,6 @@
 	Store.prototype.remove = function (id, callback) {
 		var data = JSON.parse(localStorage[this._dbName]);
 		var todos = data.todos;
-		
-		//supprimé une boucle inutile
 
 		for (var i = 0; i < todos.length; i++) {
 			if (todos[i].id == id) {
@@ -176,6 +174,7 @@
 	 */
 	Store.prototype.drop = function (callback) {
 		var data = {todos: []};
+		localStorage[this._dbName + '_lastId'] = 0
 		localStorage[this._dbName] = JSON.stringify(data);
 		callback.call(this, data.todos);
 	};
