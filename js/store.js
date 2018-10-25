@@ -99,7 +99,7 @@
 
 		// Generate an ID
 
-	    var newId = generateId(); 
+	     
 
 		// If an ID was actually given, find the item and update each property
 		if (id) {
@@ -107,8 +107,8 @@
 			updateItem(item, updateData)
 
 		} else {
-
     		// Assign an ID
+    		var newId = this.createNextId();
 			updateData.id = parseInt(newId);
     
 			todos.push(updateData);
@@ -127,6 +127,23 @@
         for (var i = 0; i < 6; i++) {
      		newId += charset.charAt(Math.floor(Math.random() * charset.length));
 		}
+		return newId
+	}
+
+	Store.prototype.getLastId = function() {
+		var key = this._dbName + '_lastId'
+		var lastId = 0
+		if (key in localStorage) {
+			lastId = parseInt(localStorage[key], 10)
+		}
+		return lastId
+	}
+
+	Store.prototype.createNextId = function() {
+		var key = this._dbName + '_lastId'
+		var lastId = this.getLastId()
+		var newId = lastId + 1
+		localStorage[key] = newId
 		return newId
 	}
 
