@@ -48,4 +48,37 @@ describe('model', function() {
         expect(items[0].completed).toBe(true)
     })
 
+    it ('should calculate the amount of todos', function() {
+        model.create('my todo1')
+        model.create('my todo2')
+        model.create('my todo3')
+        var count
+        model.getCount(function(_count) {
+            count = _count
+        })
+        expect(count.total).toEqual(3)
+    })
+
+    it ('should find a model by its id', function() {
+        model.create('my todo1')
+        model.create('my todo2')
+        var item1 = findAll()[0]
+        var foundTodo
+        model.read(item1.id, function(todos) {
+            foundTodo = todos[0]
+        })
+        expect(foundTodo).toEqual(item1)
+        
+    })
+
+    it ('should find a model with a query', function() {
+        model.create('my todo')
+        var item1 = findAll()[0]
+        var foundTodo
+        model.read({title: 'my todo'}, function(todos) {
+            foundTodo = todos[0]
+        })
+        expect(foundTodo).toEqual(item1)
+        
+    })
 })
