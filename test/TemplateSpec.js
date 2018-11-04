@@ -1,14 +1,15 @@
-describe('template', function() {
+describe('template', function () {
+    var app = window.app
     var template
-    beforeEach(function() {
+    beforeEach(function () {
         template = new app.Template()
     })
 
-    it ('should have a default template', function() {
+    it('should have a default template', function () {
         expect(template.defaultTemplate).toEqual('<li data-id="{{id}}" class="{{completed}}"><div class="view"><input class="toggle" type="checkbox" {{checked}}><label>{{title}}</label><button class="destroy"></button></div></li>')
     })
 
-    it ('should render the template with items', function() {
+    it('should render the template with items', function () {
         var view = template.show([{
             title: 'my todo',
             id: '1',
@@ -24,12 +25,12 @@ describe('template', function() {
         expect(view).toEqual(viewItem1 + viewItem2)
     })
 
-    it ('should render the number of active todos', function() {
+    it('should render the number of active todos', function () {
         expect(template.itemCounter(3)).toEqual('<strong>3</strong> items left')
         expect(template.itemCounter(1)).toEqual('<strong>1</strong> item left')
     })
 
-    it ('should render "clear completed" button text', function() {
+    it('should render "clear completed" button text', function () {
         expect(template.clearCompletedButton(0)).toEqual('')
         expect(template.clearCompletedButton(3)).toEqual('Clear completed')
     })
